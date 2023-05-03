@@ -1,7 +1,15 @@
 import React from 'react'
+import { Formulario } from './components/Formulario'
 
 export const App = () => {
   return (
-    <h1>Pixabay</h1>
+    <>
+      <div className='container bg-secondary-subtle p-5'>
+        <div className='text-center'>
+          <p>Search Images</p>
+          <Formulario />
+        </div>
+      </div>
+    </>
   )
 }

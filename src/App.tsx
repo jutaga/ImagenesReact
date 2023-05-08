@@ -7,7 +7,7 @@ export const App = () => {
 
   const [busqueda, setBusqueda] = useState('');
   const [apiResult, setApiResult] = useState<Data[]>([]);
-  const [paginaActual, setpaginaActual] = useState(17);
+  const [paginaActual, setpaginaActual] = useState(1);
   const [totalPaginas, setTotalPaginas] = useState(1);
 
 
@@ -18,7 +18,7 @@ export const App = () => {
 
       const imagenesPorPagina = 30;
       const API_KEY = '30830727-96dbe881beaad6146392ad01c'
-      const API_URL = `https://pixabay.com/api/?key=${API_KEY}&q=${busqueda}&per_page=${imagenesPorPagina}`;
+      const API_URL = `https://pixabay.com/api/?key=${API_KEY}&q=${busqueda}&per_page=${imagenesPorPagina}&page=${paginaActual}`;
 
       const respuesta = await fetch(API_URL);
       const resultado: Imagenes = await respuesta.json();
@@ -27,11 +27,15 @@ export const App = () => {
 
       const calcularPaginas = Math.ceil(resultado.totalHits / 30);
       setTotalPaginas(calcularPaginas);
+
+      //Mover la pantalla hacia arriva
+      const jumbotron = document.querySelector('.jumbotron');
+      jumbotron?.scrollIntoView({ behavior: 'auto' })
     }
 
     consultarApi();
 
-  }, [busqueda])
+  }, [busqueda, paginaActual])
 
   const paginaAnterior = () => {
     const nuevaPaginaActual = paginaActual - 1;
@@ -54,9 +58,9 @@ export const App = () => {
 
   return (
     <>
-      <div className='container-fluid bg-secondary-subtle p-5 mb-2'>
+      <div className='container-fluid jumbotron bg-secondary-subtle p-5 mb-2'>
         <div className='text-center'>
-          <p>Search Images</p>
+          <p className='lead text-dark'>Search Images</p>
           <Formulario setBusqueda={setBusqueda} />
         </div>
       </div>
@@ -68,12 +72,9 @@ export const App = () => {
           &&
           <div className='d-flex justify-content-center g-3 mb-2'>
 
-            <button disabled={paginaActual <= 1} onClick={paginaAnterior} className='btn btn-dark mx-1' type='button'> &laquo; Anterior</button>
-            <button disabled={paginaActual === totalPaginas} onClick={paginaSiguiente} className='btn btn-dark mx-1' type='button'>Siguiente &raquo;</button>
-          </div>
-
+            <button disabled={paginaActual <= 1} onClick={paginaAnterior} className='btn btn-dark mx-1' type='button'> &laquo; Previous</button>
+            <button disabled={paginaActual === totalPaginas} onClick={paginaSiguiente} className='btn btn-dark mx-1' type='button'>Next &raquo;</button>          </div>
         }
-
 
       </div>
 

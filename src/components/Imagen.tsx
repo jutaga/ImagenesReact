@@ -14,7 +14,6 @@ export const Imagen = ({ imagen }: ImagenProp) => {
         <img className="card-img-top " height={'200px'} src={previewURL} alt={tags} />
         <hr />
         <div className="card-body ">
-          <h5 className="card-title">{tags}</h5>
           <p className="card-text">{likes}  Likes - {views} Vistas</p>
         </div>
         <div className="card-footer">

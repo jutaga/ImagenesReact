@@ -1,6 +1,6 @@
 export interface Imagenes {
     total: number;
-    totalData: number;
+    totalHits: number;
     hits: Data[];
 }
 

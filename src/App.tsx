@@ -10,7 +10,6 @@ export const App = () => {
   const [paginaActual, setpaginaActual] = useState(1);
   const [totalPaginas, setTotalPaginas] = useState(1);
 
-
   useEffect(() => {
 
     const consultarApi = async () => {
@@ -31,11 +30,25 @@ export const App = () => {
       //Mover la pantalla hacia arriva
       const jumbotron = document.querySelector('.jumbotron');
       jumbotron?.scrollIntoView({ behavior: 'auto' })
-    }
 
+      localStorage.setItem('previousSearch', busqueda);
+
+    }
     consultarApi();
 
   }, [busqueda, paginaActual])
+
+  useEffect(() => {
+    const ultimaBusqueda = localStorage.getItem('previousSearch');
+
+    if (ultimaBusqueda) {
+      setBusqueda(ultimaBusqueda);
+    }
+
+
+  }, []);
+
+
 
   const paginaAnterior = () => {
     const nuevaPaginaActual = paginaActual - 1;
